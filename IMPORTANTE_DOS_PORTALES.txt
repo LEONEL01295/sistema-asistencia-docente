@@ -1,0 +1,13 @@
+SISTEMA V5 - DOS PORTALES SEPARADOS
+
+ADMINISTRADOR:
+http://localhost:3000/admin
+Usuario: admin
+Contraseña: Admin123!
+
+DOCENTES:
+http://localhost:3000/docente
+Ingreso con número de empleado y contraseña.
+
+El administrador registra al docente y le asigna la contraseña inicial.
+Cada docente únicamente puede consultar sus propios registros.

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Panel administrativo del sistema institucional de control de asistencia docente." />
+    <title>Asistencia Docente | Administración</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/index.css?v=portales-separados-v7" />
+</head>
+<body>
+    <div id="loginView" class="login-shell">
+        <section class="login-brand">
+            <div class="brand-mark">AD</div>
+            <div>
+                <p class="eyebrow">CONTROL INSTITUCIONAL</p>
+                <h1>Asistencia docente<br><span>en tiempo real.</span></h1>
+                <p>Administración de docentes, horarios, asistencias, faltas, justificantes y reportes institucionales.</p>
+            </div>
+        </section>
+        <form id="loginForm" class="login-card">
+            <div class="fingerprint">AD</div>
+            <h2>Iniciar sesión</h2>
+            <p>Acceso exclusivo para el administrador</p>
+            <label>Usuario<input id="username" autocomplete="username" required></label>
+            <label>Contraseña<input id="password" type="password" autocomplete="current-password" required></label>
+            <button class="primary" type="submit">Ingresar al sistema</button>
+            <div id="loginError" class="form-error"></div>
+        </form>
+    </div>
+
+    <div id="appView" class="app hidden">
+        <aside class="sidebar">
+            <div class="side-brand">
+                <div class="brand-mark small">AD</div>
+                <div><b>Asistencia</b><span>Docente</span></div>
+            </div>
+            <nav id="nav">
+                <button data-view="dashboard" data-roles="ALL" class="active">▦ <span id="navDashboardText">Dashboard</span></button>
+                <button data-view="teachers" data-roles="STAFF">♙ <span>Docentes</span></button>
+                <button data-view="schedules" data-roles="ALL">◷ <span id="navSchedulesText">Horarios</span></button>
+                <button data-view="attendance" data-roles="ALL">✓ <span id="navAttendanceText">Asistencias</span></button>
+                <button data-view="reports" data-roles="STAFF">▤ <span>Reportes</span></button>
+                <button data-view="justifications" data-roles="ALL">▣ <span id="navJustificationsText">Justificantes</span></button>
+                <button data-view="account" data-roles="ALL">⚙ <span>Mi cuenta</span></button>
+            </nav>
+            <div class="side-status">
+                <span id="socketDot" class="dot"></span>
+                <div><b id="socketLabel">Desconectado</b><small>Canal WebSocket</small></div>
+            </div>
+            <button id="logoutBtn" class="logout">Cerrar sesión</button>
+        </aside>
+
+        <main>
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">SISTEMA DE CONTROL</p>
+                    <h2 id="pageTitle">Dashboard</h2>
+                </div>
+                <div class="top-actions">
+                    <input type="date" id="selectedDate">
+                    <div class="clock">
+                        <b id="clockTime">--:--:--</b>
+                        <span id="clockDate">--</span>
+                    </div>
+                    <div class="user-summary">
+                        <span id="currentUserName">Usuario</span>
+                        <small id="currentUserRole">—</small>
+                    </div>
+                    <div id="avatar" class="avatar">AD</div>
+                </div>
+            </header>
+            <div id="toast" class="toast"></div>
+            <section id="content"></section>
+        </main>
+    </div>
+
+    <div id="kioskOverlay" class="kiosk-overlay hidden">
+        <div class="kiosk-card">
+            <div id="kioskIcon" class="scan-ring">✓</div>
+            <p class="eyebrow">REGISTRO DE ASISTENCIA RECIBIDO</p>
+            <h2 id="kioskName">Docente</h2>
+            <div id="kioskStatus" class="kiosk-status">PUNTUAL</div>
+            <div class="kiosk-grid">
+                <div><span>Hora registrada</span><b id="kioskTime">--:--</b></div>
+                <div><span>Horario</span><b id="kioskSchedule">--:--</b></div>
+                <div><span>Ubicación</span><b id="kioskDevice">Entrada</b></div>
+            </div>
+            <small>La ventana se cerrará automáticamente.</small>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/app.js?v=portales-separados-v7"></script>
+</body>
+</html>

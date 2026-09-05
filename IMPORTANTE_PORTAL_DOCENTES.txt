@@ -1,0 +1,8 @@
+VERSIÓN PORTAL DOCENTES V4
+
+- La base inicia vacía.
+- Solo existe admin / Admin123! al primer inicio.
+- Cada docente debe tener una cuenta vinculada.
+- El docente únicamente puede ver sus propios datos.
+- No contiene simulador biométrico.
+- La conexión con la base institucional se agregará cuando se conozcan su motor, tablas y columnas.

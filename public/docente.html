@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portal Docente - Sistema de Asistencia">
+    <meta name="theme-color" content="#0c2744">
+    <title>Portal Docente | Sistema de Asistencia</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="docente.css?v=premium-3.0">
+</head>
+<body>
+    <!-- Login View -->
+    <div id="teacherLoginView" class="teacher-login-shell">
+        <div class="teacher-login-brand">
+            <div class="brand-content">
+                <div class="brand-icon">📚</div>
+                <h1>Bienvenido Docente<br><span>Portal de Asistencia</span></h1>
+                <p>Accede a tu portal para consultar tu asistencia, horario, justificantes y más información académica.</p>
+                <div class="teacher-benefits">
+                    <span>Mi resumen</span>
+                    <span>Mi horario</span>
+                    <span>Mi historial</span>
+                    <span>Mis justificantes</span>
+                    <span>Mi cuenta</span>
+                </div>
+            </div>
+        </div>
+        <div class="teacher-login-card">
+            <div class="form-header">
+                <div class="form-eyebrow">🔐 Acceso Docente</div>
+                <h2>Iniciar sesión</h2>
+                <p>Ingresa tu número de empleado y contraseña.</p>
+            </div>
+            <form id="teacherLoginForm">
+                <div class="form-group">
+                    <label for="employeeNumber">Número de empleado</label>
+                    <input 
+                        id="employeeNumber" 
+                        type="text"
+                        autocomplete="username" 
+                        placeholder="DOC-001"
+                        required
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="teacherPassword">Contraseña</label>
+                    <input 
+                        id="teacherPassword" 
+                        type="password" 
+                        autocomplete="current-password"
+                        placeholder="••••••••"
+                        required
+                    >
+                </div>
+                <button class="teacher-login-btn" type="submit">
+                    <i class="fas fa-sign-in-alt"></i> Entrar a mi portal
+                </button>
+                <div id="teacherLoginError" class="form-error"></div>
+            </form>
+            <div class="form-footer">
+                <i class="fas fa-info-circle"></i> Demo: DOC-001 / 123456
+            </div>
+        </div>
+    </div>
+
+    <!-- App View -->
+    <div id="teacherAppView" class="teacher-app">
+        <aside class="teacher-sidebar">
+            <div class="sidebar-brand">
+                <div class="sidebar-brand-icon">📚</div>
+                <div>
+                    <h3>Portal</h3>
+                    <p>Docente</p>
+                </div>
+            </div>
+            <nav id="teacherNav">
+                <button data-view="summary" class="active">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Mi resumen</span>
+                </button>
+                <button data-view="history">
+                    <i class="fas fa-history"></i>
+                    <span>Mi historial</span>
+                </button>
+                <button data-view="schedule">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Mi horario</span>
+                </button>
+                <button data-view="justifications">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Mis justificantes</span>
+                </button>
+                <button data-view="account">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Mi cuenta</span>
+                </button>
+            </nav>
+            <div class="sidebar-status">
+                <span class="status-dot" id="teacherSocketDot"></span>
+                <b id="teacherSocketLabel">Conectado</b>
+                <small>Sistema en vivo</small>
+            </div>
+            <button id="teacherLogoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                Cerrar Sesión
+            </button>
+        </aside>
+
+        <main class="teacher-main">
+            <header class="teacher-topbar">
+                <div class="topbar-left">
+                    <div class="eyebrow">📊 Mi Portal</div>
+                    <h2 id="teacherPageTitle">Mi resumen</h2>
+                </div>
+                <div class="topbar-right">
+                    <input type="date" id="teacherSelectedDate">
+                    <div class="teacher-clock">
+                        <b id="teacherClockTime">--:--:--</b>
+                        <small id="teacherClockDate">--</small>
+                    </div>
+                    <div class="teacher-user-info">
+                        <b id="teacherCurrentName">Docente</b>
+                        <small id="teacherEmployeeLabel">—</small>
+                    </div>
+                    <div class="teacher-avatar" id="teacherAvatar">D</div>
+                </div>
+            </header>
+
+            <div id="teacherToast" class="toast"></div>
+            <section id="teacherContent"></section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="docente.js?v=premium-3.0"></script>
+</body>
+</html>

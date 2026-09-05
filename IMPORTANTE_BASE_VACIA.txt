@@ -1,0 +1,13 @@
+IMPORTANTE
+
+Esta version no contiene docentes, horarios, lectores ni asistencias de demostracion.
+
+Si copias estos archivos encima de una instalacion anterior, la base antigua puede conservar datos. Para dejarla vacia:
+
+1. Deten el servidor.
+2. Ejecuta REINICIAR_DATOS.bat.
+3. Inicia nuevamente con INICIAR_SISTEMA.bat.
+
+Acceso inicial:
+Usuario: admin
+Contrasena: Admin123!
