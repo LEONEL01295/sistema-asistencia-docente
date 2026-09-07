@@ -1,99 +1,546 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Panel administrativo del sistema institucional de control de asistencia docente." />
-    <title>Asistencia Docente | Administración</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/index.css?v=portales-separados-v7" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Administrativo - Sistema de Asistencia</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --navy: #0c2744;
+      --navy2: #11395e;
+      --blue: #1b66b3;
+      --orange: #ee7a22;
+      --bg: #f4f7fb;
+      --green: #1f9d68;
+      --red: #d94b4b;
+      --text: #333;
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0c2744 0%, #1a4d7a 50%, #0d3a5c 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(27, 102, 179, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(238, 122, 34, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      animation: float 15s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(20px, -20px); }
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      max-width: 1200px;
+      width: 90%;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* LEFT SIDE - CONTENT */
+    .content {
+      color: white;
+      animation: slideInLeft 0.8s ease-out;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 30px;
+      animation: slideDown 0.6s ease-out;
+    }
+
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--orange) 0%, #ff9a44 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 10px 30px rgba(238, 122, 34, 0.3);
+    }
+
+    .logo-text {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--orange);
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+      animation: slideInLeft 1s ease-out;
+    }
+
+    h1 span {
+      color: var(--orange);
+      display: block;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 40px;
+      line-height: 1.6;
+      max-width: 400px;
+      animation: slideInLeft 1.2s ease-out;
+    }
+
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      animation: slideInLeft 1.4s ease-out;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.9);
+      transition: all 0.3s ease;
+    }
+
+    .feature:hover {
+      transform: translateX(10px);
+    }
+
+    .feature-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(238, 122, 34, 0.2);
+      border: 2px solid var(--orange);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* RIGHT SIDE - LOGIN */
+    .login-box {
+      animation: slideInRight 0.8s ease-out;
+      perspective: 1200px;
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 50px;
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        0 0 1px rgba(255, 255, 255, 0.5) inset;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+      transform: translateZ(0);
+    }
+
+    .card:hover {
+      box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.4),
+        0 0 1px rgba(255, 255, 255, 0.5) inset;
+      transform: translateY(-5px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--blue) 0%, #2980b9 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 8px 20px rgba(27, 102, 179, 0.25);
+    }
+
+    .card-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+    }
+
+    .card-subtitle {
+      font-size: 14px;
+      color: #999;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 8px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      outline: none;
+      border-color: var(--blue);
+      background: white;
+      box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.05),
+        0 0 0 3px rgba(27, 102, 179, 0.1);
+      transform: translateY(-2px);
+    }
+
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+      color: #bbb;
+    }
+
+    .error-message {
+      font-size: 13px;
+      color: var(--red);
+      margin-top: 6px;
+      display: none;
+      animation: shake 0.3s ease;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, var(--blue) 0%, #2980b9 100%);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+      margin-top: 8px;
+      box-shadow: 0 10px 30px rgba(27, 102, 179, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-login::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(27, 102, 179, 0.4);
+    }
+
+    .btn-login:hover::before {
+      left: 100%;
+    }
+
+    .btn-login:active {
+      transform: translateY(0);
+    }
+
+    .demo-info {
+      background: linear-gradient(135deg, rgba(27, 102, 179, 0.1) 0%, rgba(27, 102, 179, 0.05) 100%);
+      border: 1px solid rgba(27, 102, 179, 0.3);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: #333;
+      margin-top: 24px;
+      line-height: 1.5;
+    }
+
+    .demo-info strong {
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    @media (max-width: 1024px) {
+      .container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .card {
+        padding: 40px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body::before {
+        display: none;
+      }
+
+      .container {
+        width: 95%;
+        gap: 30px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .card {
+        padding: 30px;
+      }
+
+      .features {
+        display: none;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div id="loginView" class="login-shell">
-        <section class="login-brand">
-            <div class="brand-mark">AD</div>
-            <div>
-                <p class="eyebrow">CONTROL INSTITUCIONAL</p>
-                <h1>Asistencia docente<br><span>en tiempo real.</span></h1>
-                <p>Administración de docentes, horarios, asistencias, faltas, justificantes y reportes institucionales.</p>
-            </div>
-        </section>
-        <form id="loginForm" class="login-card">
-            <div class="fingerprint">AD</div>
-            <h2>Iniciar sesión</h2>
-            <p>Acceso exclusivo para el administrador</p>
-            <label>Usuario<input id="username" autocomplete="username" required></label>
-            <label>Contraseña<input id="password" type="password" autocomplete="current-password" required></label>
-            <button class="primary" type="submit">Ingresar al sistema</button>
-            <div id="loginError" class="form-error"></div>
-        </form>
-    </div>
+  <div class="container">
+    <!-- LEFT SIDE -->
+    <div class="content">
+      <div class="logo">
+        <div class="logo-icon">⚙️</div>
+        <div class="logo-text">Control Institucional</div>
+      </div>
 
-    <div id="appView" class="app hidden">
-        <aside class="sidebar">
-            <div class="side-brand">
-                <div class="brand-mark small">AD</div>
-                <div><b>Asistencia</b><span>Docente</span></div>
-            </div>
-            <nav id="nav">
-                <button data-view="dashboard" data-roles="ALL" class="active">▦ <span id="navDashboardText">Dashboard</span></button>
-                <button data-view="teachers" data-roles="STAFF">♙ <span>Docentes</span></button>
-                <button data-view="schedules" data-roles="ALL">◷ <span id="navSchedulesText">Horarios</span></button>
-                <button data-view="attendance" data-roles="ALL">✓ <span id="navAttendanceText">Asistencias</span></button>
-                <button data-view="reports" data-roles="STAFF">▤ <span>Reportes</span></button>
-                <button data-view="justifications" data-roles="ALL">▣ <span id="navJustificationsText">Justificantes</span></button>
-                <button data-view="account" data-roles="ALL">⚙ <span>Mi cuenta</span></button>
-            </nav>
-            <div class="side-status">
-                <span id="socketDot" class="dot"></span>
-                <div><b id="socketLabel">Desconectado</b><small>Canal WebSocket</small></div>
-            </div>
-            <button id="logoutBtn" class="logout">Cerrar sesión</button>
-        </aside>
+      <h1>
+        Sistema de
+        <span>Asistencia Docente</span>
+      </h1>
 
-        <main>
-            <header class="topbar">
-                <div>
-                    <p class="eyebrow">SISTEMA DE CONTROL</p>
-                    <h2 id="pageTitle">Dashboard</h2>
-                </div>
-                <div class="top-actions">
-                    <input type="date" id="selectedDate">
-                    <div class="clock">
-                        <b id="clockTime">--:--:--</b>
-                        <span id="clockDate">--</span>
-                    </div>
-                    <div class="user-summary">
-                        <span id="currentUserName">Usuario</span>
-                        <small id="currentUserRole">—</small>
-                    </div>
-                    <div id="avatar" class="avatar">AD</div>
-                </div>
-            </header>
-            <div id="toast" class="toast"></div>
-            <section id="content"></section>
-        </main>
-    </div>
+      <p class="subtitle">
+        Administración completa de docentes, horarios, asistencias, justificantes y reportes institucionales.
+      </p>
 
-    <div id="kioskOverlay" class="kiosk-overlay hidden">
-        <div class="kiosk-card">
-            <div id="kioskIcon" class="scan-ring">✓</div>
-            <p class="eyebrow">REGISTRO DE ASISTENCIA RECIBIDO</p>
-            <h2 id="kioskName">Docente</h2>
-            <div id="kioskStatus" class="kiosk-status">PUNTUAL</div>
-            <div class="kiosk-grid">
-                <div><span>Hora registrada</span><b id="kioskTime">--:--</b></div>
-                <div><span>Horario</span><b id="kioskSchedule">--:--</b></div>
-                <div><span>Ubicación</span><b id="kioskDevice">Entrada</b></div>
-            </div>
-            <small>La ventana se cerrará automáticamente.</small>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">👥</div>
+          <span>Gestiona todos los docentes de la institución</span>
         </div>
+        <div class="feature">
+          <div class="feature-icon">📅</div>
+          <span>Administra horarios académicos y rotaciones</span>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📊</div>
+          <span>Monitorea asistencia en tiempo real</span>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📈</div>
+          <span>Genera reportes y análisis detallados</span>
+        </div>
+      </div>
     </div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/app.js?v=portales-separados-v7"></script>
+    <!-- RIGHT SIDE -->
+    <div class="login-box">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🔐</div>
+          <div>
+            <div class="card-title">Iniciar sesión</div>
+            <div class="card-subtitle">Acceso exclusivo para administrador</div>
+          </div>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="username">Usuario</label>
+            <input 
+              type="text" 
+              id="username" 
+              placeholder="Tu usuario de administrador"
+              required
+            >
+            <div class="error-message"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input 
+              type="password" 
+              id="password" 
+              placeholder="••••••••"
+              required
+            >
+            <div class="error-message"></div>
+          </div>
+
+          <button type="submit" class="btn-login">
+            ➜ Ingresar al sistema
+          </button>
+
+          <div class="demo-info">
+            <strong>Demo:</strong> admin / 123456
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <script>
+    const form = document.getElementById('loginForm');
+    
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      try {
+        const response = await fetch('/api/auth/admin-login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          showError(error.error || 'Usuario o contraseña incorrectos');
+          return;
+        }
+
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
+        window.location.href = '/';
+      } catch (error) {
+        showError('Error de conexión. Intenta de nuevo.');
+      }
+    });
+
+    function showError(message) {
+      const errorElements = document.querySelectorAll('.error-message');
+      errorElements.forEach(el => {
+        el.textContent = message;
+        el.classList.add('show');
+      });
+      setTimeout(() => {
+        errorElements.forEach(el => el.classList.remove('show'));
+      }, 3000);
+    }
+
+    // Smooth interactions
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('blur', function() {
+          if (this.value) {
+            this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.05)';
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
