@@ -1,148 +1,543 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portal Docente - Sistema de Asistencia">
-    <meta name="theme-color" content="#0c2744">
-    <title>Portal Docente | Sistema de Asistencia</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="docente.css?v=premium-3.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Docente - Asistencia</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --navy: #0c2744;
+      --navy2: #11395e;
+      --blue: #1b66b3;
+      --orange: #ee7a22;
+      --bg: #f4f7fb;
+      --green: #1f9d68;
+      --red: #d94b4b;
+      --text: #333;
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0c2744 0%, #1a4d7a 50%, #0d3a5c 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated background particles */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(27, 102, 179, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(238, 122, 34, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      animation: float 15s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(20px, -20px); }
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      max-width: 1200px;
+      width: 90%;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* LEFT SIDE - CONTENT */
+    .content {
+      color: white;
+      animation: slideInLeft 0.8s ease-out;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 30px;
+      animation: slideDown 0.6s ease-out;
+    }
+
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--orange) 0%, #ff9a44 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 10px 30px rgba(238, 122, 34, 0.3);
+    }
+
+    .logo-text {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+      animation: slideInLeft 1s ease-out;
+    }
+
+    h1 span {
+      color: var(--orange);
+      display: block;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 40px;
+      line-height: 1.6;
+      max-width: 400px;
+      animation: slideInLeft 1.2s ease-out;
+    }
+
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      animation: slideInLeft 1.4s ease-out;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.9);
+      transition: all 0.3s ease;
+    }
+
+    .feature:hover {
+      transform: translateX(10px);
+    }
+
+    .feature-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(238, 122, 34, 0.2);
+      border: 2px solid var(--orange);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* RIGHT SIDE - LOGIN FORM */
+    .login-box {
+      animation: slideInRight 0.8s ease-out;
+      perspective: 1200px;
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 50px;
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        0 0 1px rgba(255, 255, 255, 0.5) inset;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+      transform: translateZ(0);
+    }
+
+    .card:hover {
+      box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.4),
+        0 0 1px rgba(255, 255, 255, 0.5) inset;
+      transform: translateY(-5px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--orange) 0%, #ff9a44 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 8px 20px rgba(238, 122, 34, 0.25);
+    }
+
+    .card-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+    }
+
+    .card-subtitle {
+      font-size: 14px;
+      color: #999;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 8px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      outline: none;
+      border-color: var(--orange);
+      background: white;
+      box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.05),
+        0 0 0 3px rgba(238, 122, 34, 0.1);
+      transform: translateY(-2px);
+    }
+
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+      color: #bbb;
+    }
+
+    .error-message {
+      font-size: 13px;
+      color: var(--red);
+      margin-top: 6px;
+      display: none;
+      animation: shake 0.3s ease;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, var(--orange) 0%, #ff9a44 100%);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+      margin-top: 8px;
+      box-shadow: 0 10px 30px rgba(238, 122, 34, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-login::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(238, 122, 34, 0.4);
+    }
+
+    .btn-login:hover::before {
+      left: 100%;
+    }
+
+    .btn-login:active {
+      transform: translateY(0);
+    }
+
+    .demo-info {
+      background: linear-gradient(135deg, rgba(31, 157, 104, 0.1) 0%, rgba(31, 157, 104, 0.05) 100%);
+      border: 1px solid rgba(31, 157, 104, 0.3);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: #333;
+      margin-top: 24px;
+      line-height: 1.5;
+    }
+
+    .demo-info strong {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    @media (max-width: 1024px) {
+      .container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .card {
+        padding: 40px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body::before {
+        display: none;
+      }
+
+      .container {
+        width: 95%;
+        gap: 30px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .card {
+        padding: 30px;
+      }
+
+      .features {
+        display: none;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Login View -->
-    <div id="teacherLoginView" class="teacher-login-shell">
-        <div class="teacher-login-brand">
-            <div class="brand-content">
-                <div class="brand-icon">📚</div>
-                <h1>Bienvenido Docente<br><span>Portal de Asistencia</span></h1>
-                <p>Accede a tu portal para consultar tu asistencia, horario, justificantes y más información académica.</p>
-                <div class="teacher-benefits">
-                    <span>Mi resumen</span>
-                    <span>Mi horario</span>
-                    <span>Mi historial</span>
-                    <span>Mis justificantes</span>
-                    <span>Mi cuenta</span>
-                </div>
-            </div>
+  <div class="container">
+    <!-- LEFT SIDE -->
+    <div class="content">
+      <div class="logo">
+        <div class="logo-icon">🎓</div>
+        <div class="logo-text">ITSH</div>
+      </div>
+
+      <h1>
+        Bienvenido
+        <span>Docente</span>
+      </h1>
+
+      <p class="subtitle">
+        Accede a tu portal para consultar tu asistencia, horario, justificantes y más información académica.
+      </p>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">📊</div>
+          <span>Visualiza tu resumen de asistencia</span>
         </div>
-        <div class="teacher-login-card">
-            <div class="form-header">
-                <div class="form-eyebrow">🔐 Acceso Docente</div>
-                <h2>Iniciar sesión</h2>
-                <p>Ingresa tu número de empleado y contraseña.</p>
-            </div>
-            <form id="teacherLoginForm">
-                <div class="form-group">
-                    <label for="employeeNumber">Número de empleado</label>
-                    <input 
-                        id="employeeNumber" 
-                        type="text"
-                        autocomplete="username" 
-                        placeholder="DOC-001"
-                        required
-                    >
-                </div>
-                <div class="form-group">
-                    <label for="teacherPassword">Contraseña</label>
-                    <input 
-                        id="teacherPassword" 
-                        type="password" 
-                        autocomplete="current-password"
-                        placeholder="••••••••"
-                        required
-                    >
-                </div>
-                <button class="teacher-login-btn" type="submit">
-                    <i class="fas fa-sign-in-alt"></i> Entrar a mi portal
-                </button>
-                <div id="teacherLoginError" class="form-error"></div>
-            </form>
-            <div class="form-footer">
-                <i class="fas fa-info-circle"></i> Demo: DOC-001 / 123456
-            </div>
+        <div class="feature">
+          <div class="feature-icon">📅</div>
+          <span>Consulta tu horario académico</span>
         </div>
+        <div class="feature">
+          <div class="feature-icon">📋</div>
+          <span>Gestiona tus justificantes</span>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📈</div>
+          <span>Descarga reportes detallados</span>
+        </div>
+      </div>
     </div>
 
-    <!-- App View -->
-    <div id="teacherAppView" class="teacher-app">
-        <aside class="teacher-sidebar">
-            <div class="sidebar-brand">
-                <div class="sidebar-brand-icon">📚</div>
-                <div>
-                    <h3>Portal</h3>
-                    <p>Docente</p>
-                </div>
-            </div>
-            <nav id="teacherNav">
-                <button data-view="summary" class="active">
-                    <i class="fas fa-chart-pie"></i>
-                    <span>Mi resumen</span>
-                </button>
-                <button data-view="history">
-                    <i class="fas fa-history"></i>
-                    <span>Mi historial</span>
-                </button>
-                <button data-view="schedule">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Mi horario</span>
-                </button>
-                <button data-view="justifications">
-                    <i class="fas fa-file-alt"></i>
-                    <span>Mis justificantes</span>
-                </button>
-                <button data-view="account">
-                    <i class="fas fa-user-circle"></i>
-                    <span>Mi cuenta</span>
-                </button>
-            </nav>
-            <div class="sidebar-status">
-                <span class="status-dot" id="teacherSocketDot"></span>
-                <b id="teacherSocketLabel">Conectado</b>
-                <small>Sistema en vivo</small>
-            </div>
-            <button id="teacherLogoutBtn">
-                <i class="fas fa-sign-out-alt"></i>
-                Cerrar Sesión
-            </button>
-        </aside>
+    <!-- RIGHT SIDE -->
+    <div class="login-box">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🔐</div>
+          <div>
+            <div class="card-title">Iniciar sesión</div>
+            <div class="card-subtitle">Acceso Docente</div>
+          </div>
+        </div>
 
-        <main class="teacher-main">
-            <header class="teacher-topbar">
-                <div class="topbar-left">
-                    <div class="eyebrow">📊 Mi Portal</div>
-                    <h2 id="teacherPageTitle">Mi resumen</h2>
-                </div>
-                <div class="topbar-right">
-                    <input type="date" id="teacherSelectedDate">
-                    <div class="teacher-clock">
-                        <b id="teacherClockTime">--:--:--</b>
-                        <small id="teacherClockDate">--</small>
-                    </div>
-                    <div class="teacher-user-info">
-                        <b id="teacherCurrentName">Docente</b>
-                        <small id="teacherEmployeeLabel">—</small>
-                    </div>
-                    <div class="teacher-avatar" id="teacherAvatar">D</div>
-                </div>
-            </header>
+        <form id="teacherLoginForm">
+          <div class="form-group">
+            <label for="employeeNumber">Número de empleado</label>
+            <input 
+              type="text" 
+              id="employeeNumber" 
+              placeholder="Ej: DOC-001"
+              required
+            >
+            <div class="error-message"></div>
+          </div>
 
-            <div id="teacherToast" class="toast"></div>
-            <section id="teacherContent"></section>
-        </main>
+          <div class="form-group">
+            <label for="teacherPassword">Contraseña</label>
+            <input 
+              type="password" 
+              id="teacherPassword" 
+              placeholder="••••••••"
+              required
+            >
+            <div class="error-message"></div>
+          </div>
+
+          <button type="submit" class="btn-login">
+            ➜ Entrar a mi portal
+          </button>
+
+          <div class="demo-info">
+            <strong>Demo:</strong> DOC-001 / 123456
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 
-    <!-- Scripts -->
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="docente.js?v=premium-3.0"></script>
+  <script>
+    const form = document.getElementById('teacherLoginForm');
+    
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const employeeNumber = document.getElementById('employeeNumber').value;
+      const password = document.getElementById('teacherPassword').value;
+      
+      try {
+        const response = await fetch('/api/auth/docente-login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ employeeNumber, password })
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          showError(error.message || 'Credenciales incorrectas');
+          return;
+        }
+
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
+        window.location.href = '/docente-dashboard';
+      } catch (error) {
+        showError('Error de conexión. Intenta de nuevo.');
+      }
+    });
+
+    function showError(message) {
+      const errorElements = document.querySelectorAll('.error-message');
+      errorElements.forEach(el => {
+        el.textContent = message;
+        el.classList.add('show');
+      });
+      setTimeout(() => {
+        errorElements.forEach(el => el.classList.remove('show'));
+      }, 3000);
+    }
+
+    // Smooth scroll y animaciones
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('blur', function() {
+          if (this.value) {
+            this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.05)';
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
